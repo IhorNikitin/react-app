@@ -1,12 +1,13 @@
 import firebase from 'firebase';
 import { Record } from 'immutable';
-
 import { appName } from '../config';
+import store from '../redux';
 
 export const moduleName = 'auth';
 export const SIGN_UP_REQUEST = `${appName}/${moduleName}/SIGN_UP_REQUEST`;
 export const SIGN_UP_SUCCESS = `${appName}/${moduleName}/SIGN_UP_SUCCESS`;
 export const SIGN_UP_ERROR = `${appName}/${moduleName}/SIGN_UP_ERROR`;
+export const SIGN_IN_SUCCESS = `${appName}/${moduleName}/SIGN_IN_SUCCESS`;
 
 const RecordReducer = Record({
     user: null,
@@ -21,6 +22,11 @@ export default function reducer (state = new RecordReducer(), action) {
         case SIGN_UP_REQUEST:
             return state.set('loading', true);
         case SIGN_UP_SUCCESS:
+            return state
+                .set('loading', false)
+                .set('user', payload.user)
+                .set('error', null);
+        case SIGN_IN_SUCCESS:
             return state
                 .set('loading', false)
                 .set('user', payload.user)
@@ -51,3 +57,10 @@ export function signUp (email, pass) {
             }));
     };
 }
+
+firebase.auth().onAuthStateChanged(user => {
+    store.dispatch({
+        type: SIGN_IN_SUCCESS,
+        payload: {user},
+    });
+});

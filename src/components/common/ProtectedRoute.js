@@ -23,5 +23,5 @@ const ProtectedRoute = (props) => {
 export default connect(
     state => ({
         authorized: !!state[moduleName].user,
-    })
+    }), null, null, {pure: false}
 )(ProtectedRoute);

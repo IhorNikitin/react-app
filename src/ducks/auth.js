@@ -1,8 +1,7 @@
 import firebase from 'firebase';
 import { Record } from 'immutable';
 import { appName } from '../config';
-import store from '../redux';
-import { all, take, call, put } from 'redux-saga/effects';
+import { all, take, call, put, cps } from 'redux-saga/effects';
 
 export const moduleName = 'auth';
 export const SIGN_UP_REQUEST = `${appName}/${moduleName}/SIGN_UP_REQUEST`;
@@ -74,33 +73,23 @@ export const signUpSaga = function* () {
 	}
 };
 
-/*export function signUp (email, pass) {
-    return (dispatch) => {
-        dispatch({
-            type: SIGN_UP_REQUEST,
+export const watchChangeStatusSaga = function* () {
+	const auth = firebase.auth();
+	
+	try {
+	    yield cps([auth, auth.onAuthStateChanged]);	
+	} catch(user) {
+		yield put({
+			type: SIGN_IN_SUCCESS,
+			payload: {user},
         });
-
-        firebase.auth().createUserWithEmailAndPassword(email, pass)
-            .then(user => dispatch({
-                type: SIGN_UP_SUCCESS,
-                payload: user,
-            }))
-            .catch(error => dispatch({
-                type: SIGN_UP_ERROR,
-                error,
-            }));
-    };
-}*/
-
-firebase.auth().onAuthStateChanged(user => {
-    store.dispatch({
-        type: SIGN_IN_SUCCESS,
-        payload: {user},
-    });
-});
+	}
+	
+}; 
 
 export const saga = function* () {
     yield all([
 	    signUpSaga(),
+		watchChangeStatusSaga()
 	]);
 };

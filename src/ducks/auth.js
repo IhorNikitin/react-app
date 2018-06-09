@@ -1,13 +1,17 @@
 import firebase from 'firebase';
 import { Record } from 'immutable';
 import { appName } from '../config';
-import { all, take, call, put, cps } from 'redux-saga/effects';
+import { all, take, takeEvery, call, put, cps } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 
 export const moduleName = 'auth';
 export const SIGN_UP_REQUEST = `${appName}/${moduleName}/SIGN_UP_REQUEST`;
 export const SIGN_UP_SUCCESS = `${appName}/${moduleName}/SIGN_UP_SUCCESS`;
 export const SIGN_UP_ERROR = `${appName}/${moduleName}/SIGN_UP_ERROR`;
 export const SIGN_IN_SUCCESS = `${appName}/${moduleName}/SIGN_IN_SUCCESS`;
+export const SIGN_OUT_REQUEST = `${appName}/${moduleName}/SIGN_OUT_REQUEST`;
+export const SIGN_OUT_SUCCESS = `${appName}/${moduleName}/SIGN_OUT_SUCCESS`;
+export const SIGN_OUT_ERROR = `${appName}/${moduleName}/SIGN_OUT_ERROR`;
 
 const RecordReducer = Record({
     user: null,
@@ -20,6 +24,8 @@ export default function reducer (state = new RecordReducer(), action) {
 
     switch (type) {
         case SIGN_UP_REQUEST:
+            return state.set('loading', true);
+		case SIGN_OUT_REQUEST:
             return state.set('loading', true);
         case SIGN_UP_SUCCESS:
             return state
@@ -35,15 +41,30 @@ export default function reducer (state = new RecordReducer(), action) {
             return state
                 .set('loading', false)
                 .set('error', error);
+		case SIGN_OUT_SUCCESS:
+            return state
+                .set('loading', false)
+                .set('user', null)
+                .set('error', null);
+		case SIGN_OUT_ERROR:
+            return state
+                .set('loading', false)
+                .set('error', error);
         default:
             return state;
     }
 }
 
-export function signUp (email, pass) {
+export function signUp(email, pass) {
     return ({
 		type: SIGN_UP_REQUEST,
 		payload: { email, pass },
+	});
+}
+
+export function signOut() {
+    return ({
+		type: SIGN_OUT_REQUEST,
 	});
 }
 
@@ -73,6 +94,24 @@ export const signUpSaga = function* () {
 	}
 };
 
+export const signOutSaga = function* (action) {
+	const auth = firebase.auth();
+	
+	try {
+		yield call([auth, auth.signOut]);
+	
+		yield put({
+			type: SIGN_OUT_SUCCESS,
+		});
+		// yield put(push('/auth/signin');
+	} catch (error) {
+		yield put({
+			type: SIGN_OUT_ERROR,
+			error
+		});
+	}
+};
+
 export const watchChangeStatusSaga = function* () {
 	const auth = firebase.auth();
 	
@@ -90,6 +129,7 @@ export const watchChangeStatusSaga = function* () {
 export const saga = function* () {
     yield all([
 	    signUpSaga(),
+		yield takeEvery(SIGN_OUT_REQUEST, signOutSaga),
 		watchChangeStatusSaga()
 	]);
 };

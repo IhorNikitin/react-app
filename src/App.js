@@ -4,6 +4,7 @@ import Root from './components/Root';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import history from './history';
+import './mocks';
 
 class App extends Component {
   render() {

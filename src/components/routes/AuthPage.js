@@ -3,7 +3,7 @@ import { Route, NavLink } from 'react-router-dom';
 import SignInForm from '../auth/SignInForm';
 import SignUpForm from '../auth/SignUpForm';
 import { connect } from 'react-redux';
-import { signUp, moduleName } from '../../ducks/auth';
+import { signUp, signIn, moduleName } from '../../ducks/auth';
 import Loader from '../common/Loader';
 
 class AuthPage extends Component {
@@ -22,7 +22,7 @@ class AuthPage extends Component {
 	  </div>
     );
   }
-  handleSignIn = (values) => console.log('-----', values);
+  handleSignIn = ({ email, pass }) => this.props.signIn(email, pass);
   handleSignUp = ({ email, pass }) => this.props.signUp(email, pass);
 }
 
@@ -30,5 +30,5 @@ export default connect(
     state => ({
         loading: state[moduleName].loading,
     }),
-    { signUp }
+    { signUp, signIn }
 )(AuthPage);

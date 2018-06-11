@@ -23,12 +23,17 @@ class EventsList extends Component {
   getRows = () => this.props.events.map(this.getRow);
   getRow = (event) => {
       return (
-          <tr key={event.uid}>
+          <tr key={event.uid} className="test__row" onClick={this.handleRowClick(event.uid)}>
               <td>{event.title}</td>
               <td>{event.where}</td>
               <td>{event.month}</td>
           </tr>
       );
+  };
+
+  handleRowClick = (uid) => () => {
+      const { selectEvent } = this.props;
+      selectEvent && selectEvent(uid);
   };
 }
 

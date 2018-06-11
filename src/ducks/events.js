@@ -18,7 +18,7 @@ const ReducerState = Record({
 	loaded: false,
 });
 
-const EventRecord = Record({
+export const EventRecord = Record({
     uid: null,
     title: null,
     url: null,

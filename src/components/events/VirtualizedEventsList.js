@@ -12,7 +12,7 @@ class VirtualizedEventsList extends Component {
 
     render() {
         const { events, loading, loaded } = this.props;
-        if (loading) return <Loader />;
+        //if (loading) return <Loader />;
         return (
             <div>
                 <InfiniteLoader
@@ -32,6 +32,7 @@ class VirtualizedEventsList extends Component {
                             height={300}
                             onRowClick={this.handleRowClick}
                             onRowsRendered={onRowsRendered}
+                            overscanRowCount={5}
                         >
                             <Column
                                 dataKey='title'
@@ -58,7 +59,6 @@ class VirtualizedEventsList extends Component {
     isRowLoaded = ({ index }) => index < this.props.events.length;
 
     loadMoreRows = () => {
-        console.log('-----', 'load more');
         this.props.fetchLazy();
     };
 

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import EventsList from '../events/EventsList';
+import VirtualizedEventsList from '../events/VirtualizedEventsList';
 
 class EventsPage extends Component {
   render() {
     return (
 	  <div>
 	    <h2>Events Page</h2>
-		<EventsList />
+		<VirtualizedEventsList />
 	  </div>
     );
   }

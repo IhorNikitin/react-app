@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
+import { connect } from 'react-redux';
+import { addEventToPerson } from '../../ducks/people';
 
 class EventCard extends Component {
     static propTypes = {
@@ -27,7 +29,8 @@ const spec = {
         const personUid = monitor.getItem().uid;
         const eventUid = props.event.uid;
 
-        console.log('-----', personUid, eventUid);
+        props.addEventToPerson(eventUid, personUid);
+        return { eventUid };
     }
 };
 
@@ -37,4 +40,4 @@ const collect = (connect, monitor) => ({
     canDrop: monitor.canDrop(),
 });
 
-export default DropTarget(['person'], spec, collect)(EventCard);
+export default connect(null, { addEventToPerson })(DropTarget(['person'], spec, collect)(EventCard));

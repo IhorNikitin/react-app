@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addPerson } from '../../ducks/people';
 import NewPersonForm from '../people/NewPersonForm';
+import PeopleList from '../people/VirtualizedPeopleList';
 
 class PersonPage extends Component {
     render() {
         return (
-            <NewPersonForm onSubmit={this.handleAddPerson}/>
+            <div>
+                <NewPersonForm onSubmit={this.handleAddPerson}/>
+                <PeopleList />
+            </div>
         );
     }
 

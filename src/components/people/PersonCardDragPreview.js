@@ -4,7 +4,6 @@ import { personSelector } from '../../ducks/people';
 
 class PersonCardDragPreview extends Component {
     render() {
-        console.log(this.props);
         return (
             <div>
                 <h2>{this.props.person.firstName}</h2>

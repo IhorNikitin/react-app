@@ -1,6 +1,7 @@
 import { Record, List } from 'immutable';
 import { appName } from '../config';
-import { put, call, takeEvery, select } from 'redux-saga/effects';
+import { all, put, call, takeEvery, select, fork, spawn, cancel, cancelled, race } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 import { reset } from 'redux-form';
 import { fbDataToEntities } from './utils';
 import { createSelector } from 'reselect';
@@ -122,8 +123,35 @@ export const fetchAllPeopleSaga = function * () {
     });
 };
 
+export const backendSyncSaga = function* () {
+    try {
+        while (true) {
+            yield call(fetchAllPeopleSaga);
+            yield delay(2000);
+        }
+    } finally {
+        if ( yield cancelled() ) {
+            console.log('cancelled saga');
+        }
+    }
+
+};
+
+export const cancelledSaga = function* () {
+    yield race({
+        sync: backendSyncSaga(),
+        delay: delay(7000)
+    });
+    // const task = yield fork(backendSyncSaga);
+    // yield delay(7000);
+    // yield cancel(task);
+};
+
 export const saga = function* () {
-    yield takeEvery(ADD_PERSON_REQUEST, addPersonSaga);
-    yield takeEvery(ADD_EVENT_REQUEST, addEventSaga);
-    yield takeEvery(FETCH_ALL_PERSON_REQUEST, fetchAllPeopleSaga);
+    yield spawn(cancelledSaga);
+    yield all([
+        takeEvery(ADD_PERSON_REQUEST, addPersonSaga),
+        takeEvery(ADD_EVENT_REQUEST, addEventSaga),
+        takeEvery(FETCH_ALL_PERSON_REQUEST, fetchAllPeopleSaga)
+    ]);
 };

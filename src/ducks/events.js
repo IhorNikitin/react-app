@@ -14,6 +14,8 @@ export const FETCH_LAZY_START = `${prefix}/FETCH_LAZY_START`;
 export const FETCH_LAZY_REQUEST = `${prefix}/FETCH_LAZY_REQUEST`;
 export const FETCH_LAZY_SUCCESS = `${prefix}/FETCH_LAZY_SUCCESS`;
 export const SELECT_EVENT = `${prefix}/SELECT_EVENT`;
+export const DELETE_EVENT_REQUEST = `${prefix}/DELETE_EVENT_REQUEST`;
+export const DELETE_EVENT_SUCCESS = `${prefix}/DELETE_EVENT_SUCCESS`;
 
 
 const ReducerState = Record({
@@ -39,6 +41,7 @@ export default function reducer (state = new ReducerState(), action) {
     switch (type) {
 		case FETCH_ALL_REQUEST:
         case FETCH_LAZY_START:
+        case DELETE_EVENT_REQUEST:
 			return state
 			    .set('loading', true);
 		case FETCH_ALL_SUCCESS:
@@ -56,6 +59,8 @@ export default function reducer (state = new ReducerState(), action) {
             return state.selected.contains(payload)
                 ? state.update('selected', selected => selected.remove(payload))
                 : state.update('selected', selected => selected.add(payload));
+        case DELETE_EVENT_SUCCESS:
+            return state.update('entities', entities => entities.remove(payload));
         default:
             return state;
     }
@@ -83,6 +88,27 @@ export const selectEvent = (uid) => ({
     type: SELECT_EVENT,
     payload: uid,
 });
+
+export const deleteEvent = (uid) => ({
+    type: DELETE_EVENT_REQUEST,
+    payload: uid,
+});
+
+export const deleteEventSaga = function * () {
+    try {
+        const action = yield take(DELETE_EVENT_REQUEST);
+
+        const eventRef = firebase.database().ref(`events/${action.payload}`);
+        yield call([eventRef, eventRef.remove]);
+
+        yield put({
+            type: DELETE_EVENT_SUCCESS,
+            payload: action.payload
+        });
+    } catch(_) {
+
+    }
+};
 
 export const fetchAllSaga = function * () {
     while (true) {
@@ -130,6 +156,7 @@ export const fetchLazySaga = function * () {
 export const saga = function* () {
     yield all([
 	    fetchAllSaga(),
-        fetchLazySaga()
+        fetchLazySaga(),
+        deleteEventSaga()
 	]);
 };

@@ -1,7 +1,7 @@
 import { Record, List } from 'immutable';
 import { appName } from '../config';
-import { all, put, call, takeEvery, select, fork, spawn, cancel, cancelled, race } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
+import { all, put, call, take, takeEvery, select, fork, spawn, cancel, cancelled, race } from 'redux-saga/effects';
+import { delay, eventChannel } from 'redux-saga';
 import { reset } from 'redux-form';
 import { fbDataToEntities } from './utils';
 import { createSelector } from 'reselect';
@@ -139,12 +139,42 @@ export const backendSyncSaga = function* () {
 
 export const cancelledSaga = function* () {
     yield race({
-        sync: backendSyncSaga(),
+        sync: realtimeSync(),
         delay: delay(7000)
     });
     // const task = yield fork(backendSyncSaga);
     // yield delay(7000);
     // yield cancel(task);
+};
+
+const createPeopleSocket = () => eventChannel(emmit => {
+    const ref = firebase.database().ref('people');
+    const callback = data => emmit({data});
+    ref.on('value', callback);
+
+    return () => {
+        console.log('---', 'unsubscribing');
+        ref.off('value', callback)
+    };
+});
+
+export const realtimeSync = function* () {
+    const channel = yield call(createPeopleSocket);
+    try {
+        while (true) {
+            const { data } = yield take(channel);
+            console.log('-----', data.val());
+
+            yield put({
+                type: FETCH_ALL_PERSON_SUCCESS,
+                payload: data.val()
+            });
+        }
+    } finally {
+        yield call([channel, channel.close]);
+        console.log('-----', 'cancelled realtime sync');
+    }
+
 };
 
 export const saga = function* () {

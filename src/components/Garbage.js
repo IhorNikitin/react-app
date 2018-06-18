@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { deleteEvent } from '../ducks/events';
+import { Motion, spring, presets } from 'react-motion';
 
 class Garbage extends Component {
 
@@ -19,9 +20,14 @@ class Garbage extends Component {
             border: `1px solid ${hovered ? 'green' : 'black'}`
         };
 
-        return connectDropTarget(
-            <div style={style}>It's a garbage!</div>
-        );
+        return <Motion
+            defaultStyle={{opacity: 0}}
+            style={{opacity: spring(1, {...presets.noWobble, stiffness: presets.noWobble.stiffness / 20})}}
+        >
+            {interpolatedStyle => connectDropTarget(
+                <div style={{...style, ...interpolatedStyle}}>It\'s a garbage!</div>
+            )}
+        </Motion>
     }
 
 }

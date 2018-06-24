@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DragLayer } from 'react-dnd';
+
 import PersonCardDragPreview from './people/PersonCardDragPreview';
 
 const layerStyle = {

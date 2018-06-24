@@ -1,8 +1,9 @@
 import firebase from 'firebase';
 import { Record, OrderedMap, OrderedSet } from 'immutable';
-import { appName } from '../config';
-import { put, all, take, call, select } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
+import { put, all, take, call, select } from 'redux-saga/effects';
+
+import { appName } from '../config';
 import { fbDataToEntities } from './utils';
 
 export const moduleName = 'events';
@@ -17,12 +18,11 @@ export const SELECT_EVENT = `${prefix}/SELECT_EVENT`;
 export const DELETE_EVENT_REQUEST = `${prefix}/DELETE_EVENT_REQUEST`;
 export const DELETE_EVENT_SUCCESS = `${prefix}/DELETE_EVENT_SUCCESS`;
 
-
 const ReducerState = Record({
     entities: new OrderedMap({}),
     selected: new OrderedSet([]),
-	loading: false,
-	loaded: false,
+    loading: false,
+    loaded: false,
 });
 
 export const EventRecord = Record({
@@ -39,16 +39,16 @@ export default function reducer (state = new ReducerState(), action) {
     const { type, payload } = action;
 
     switch (type) {
-		case FETCH_ALL_REQUEST:
+        case FETCH_ALL_REQUEST:
         case FETCH_LAZY_START:
         case DELETE_EVENT_REQUEST:
-			return state
-			    .set('loading', true);
-		case FETCH_ALL_SUCCESS:
-			return state
-			    .set('loading', false)
-				.set('loaded', false)
-				.set('entities', fbDataToEntities(payload, EventRecord));
+            return state
+                .set('loading', true);
+        case FETCH_ALL_SUCCESS:
+            return state
+                .set('loading', false)
+                .set('loaded', false)
+                .set('entities', fbDataToEntities(payload, EventRecord));
         case FETCH_LAZY_SUCCESS:
             return state
                 .set('loading', false)
@@ -77,7 +77,7 @@ export const selectedListSelector = createSelector(entitiesSelector, selectedEve
 ));
 
 export const fetchAll = () => ({
-	type: FETCH_ALL_REQUEST,
+    type: FETCH_ALL_REQUEST,
 });
 
 export const fetchLazy = () => ({
@@ -155,8 +155,8 @@ export const fetchLazySaga = function * () {
 
 export const saga = function* () {
     yield all([
-	    fetchAllSaga(),
+        fetchAllSaga(),
         fetchLazySaga(),
         deleteEventSaga()
-	]);
+    ]);
 };

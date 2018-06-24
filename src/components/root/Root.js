@@ -14,32 +14,32 @@ import CustomDragLayer from '../CustomDragLayer';
 import './Root.css';
 
 class Root extends Component {
-  render() {
-	const { signedIn, signOut } = this.props;
-	
-    return (
-      <Fragment>
-	    <Header
-			signedIn={signedIn}
-			signOut={signOut}
-		/>
-		<div className='nav'>
-			<ul>
-				<li><Link to='/admin'>Admin</Link></li>
-				<li><Link to='/people'>People List</Link></li>
-				<li><Link to='/events'>Events List</Link></li>
-			</ul>
-		</div>
-        <ProtectedRoute path='/admin' component={AdminPage} />
-        <ProtectedRoute path='/people' component={PersonPage} />
-		<ProtectedRoute path='/events' component={EventsPage} />
-		<Route path='/auth' component={AuthPage} />
-        <CustomDragLayer />
-      </Fragment>
-    );
-  }
+    render() {
+        const { signedIn, signOut } = this.props;
+
+        return (
+            <Fragment>
+                <Header
+                    signedIn={signedIn}
+                    signOut={signOut}
+                />
+                <div className='nav'>
+                    <ul>
+                        <li><Link to='/admin'>Admin</Link></li>
+                        <li><Link to='/people'>People List</Link></li>
+                        <li><Link to='/events'>Events List</Link></li>
+                    </ul>
+                </div>
+                <ProtectedRoute path='/admin' component={AdminPage} />
+                <ProtectedRoute path='/people' component={PersonPage} />
+                <ProtectedRoute path='/events' component={EventsPage} />
+                <Route path='/auth' component={AuthPage} />
+                <CustomDragLayer />
+            </Fragment>
+        );
+    }
 }
 
 export default connect(state => ({
-	signedIn: !!state[moduleName].user,
+    signedIn: !!state[moduleName].user,
 }), { signOut }, null, { pure: false } )(Root);

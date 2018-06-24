@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { moduleName, fetchLazy, selectEvent, eventListSelector } from '../../ducks/events';
 import { Table, Column, InfiniteLoader } from 'react-virtualized';
+
+import { moduleName, fetchLazy, selectEvent, eventListSelector } from '../../ducks/events';
 import TableRow from './TableRow';
+
 import 'react-virtualized/styles.css';
 
 class VirtualizedEventsList extends Component {
@@ -27,15 +29,15 @@ class VirtualizedEventsList extends Component {
                             rowGetter={({ index }) => events[index]}
                             rowHeight={30}
                             headerHeight={50}
-							headerClassName='tableHeader'
+                            headerClassName='tableHeader'
                             width={1135}
                             height={300}
-							className='table'
+                            className='table'
                             onRowClick={this.handleRowClick}
                             onRowsRendered={onRowsRendered}
                             overscanRowCount={5}
                             rowRenderer={this.rowRenderer}
-							rowClassName='tableRow'
+                            rowClassName='tableRow'
                         >
                             <Column
                                 dataKey='title'

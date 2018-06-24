@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import { defaultTableRowRenderer } from 'react-virtualized';
 
@@ -11,7 +11,6 @@ class TableRow extends Component {
             defaultTableRowRenderer(rest)
         );
     }
-
 }
 
 const spec = {

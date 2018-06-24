@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { selectedListSelector } from '../../ducks/events';
 import { connect } from 'react-redux';
-import EventCard from './EventCard';
 import { TransitionMotion, spring } from 'react-motion';
 
+import { selectedListSelector } from '../../ducks/events';
+import EventCard from './EventCard';
+
 class SelectedEvents extends Component {
-    static propTypes = {
-
-    };
-
     render() {
         const { events } = this.props;
         return (
@@ -19,10 +16,10 @@ class SelectedEvents extends Component {
             >
                 {(interpolated) =>
                     <div className='selectedEvents' title='you can add events to selected after click on row in table'>
-						<h3>Selected Events: </h3>
-						{interpolated.map(config => <div style={config.style} key = {config.key}>
-							<EventCard event = {config.data} />
-						</div>)}
+                        <h3>Selected Events: </h3>
+                        {interpolated.map(config => <div style={config.style} key = {config.key}>
+                            <EventCard event = {config.data} />
+                        </div>)}
                     </div>
                 }
             </TransitionMotion>

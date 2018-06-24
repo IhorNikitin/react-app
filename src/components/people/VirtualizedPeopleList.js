@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Table, Column } from 'react-virtualized';
+
 import { moduleName, fetchAll, peopleListSelector } from '../../ducks/people';
 import Loader from '../common/Loader';
-import { Table, Column } from 'react-virtualized';
+
 import 'react-virtualized/styles.css';
 
 class VirtualizedPeopleList extends Component {
@@ -19,12 +21,12 @@ class VirtualizedPeopleList extends Component {
                     rowCount={people.length}
                     rowGetter={({ index }) => people[index]}
                     rowHeight={30}
-					rowClassName='tableRow'
+                    rowClassName='tableRow'
                     headerHeight={50}
-					headerClassName='tableHeader'
+                    headerClassName='tableHeader'
                     width={1135}
                     height={200}
-					className='table'
+                    className='table'
                 >
                     <Column
                         dataKey='firstName'

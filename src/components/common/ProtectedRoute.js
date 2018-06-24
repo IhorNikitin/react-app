@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { moduleName } from '../../ducks/auth';
 import UnAuthorized from './UnAuthorized';
 
@@ -16,8 +17,6 @@ const ProtectedRoute = (props) => {
     return (
         <Route {...rest} render={renderRoute} />
     );
-
-
 };
 
 export default connect(

@@ -11,7 +11,7 @@ class PersonPage extends Component {
     render() {
         return (
             <div className='personPage'>
-			    <h2>People page</h2>
+                <h2>People page</h2>
                 <NewPersonForm onSubmit={this.handleAddPerson}/>
                 <PeopleList />
             </div>

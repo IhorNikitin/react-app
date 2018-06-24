@@ -1,28 +1,28 @@
 .personPage {
-	padding: 20px 30px 30px;
+    padding: 20px 30px 30px;
 }
 
 .personPage h2 {
-	text-align: center;
+    text-align: center;
 }
 
 .addPerson {
-	margin: 25px 0;
+    margin: 25px 0;
 }
 
 .addPerson h3 {
-	text-decoration: underline;
-	color: #009ac7;
+    text-decoration: underline;
+    color: #009ac7;
 }
 
 .table {
-	margin: 40px 0 0;
-	border: 1px solid #ccc;
+    margin: 40px 0 0;
+    border: 1px solid #ccc;
 }
 
 .tableHeader {
-	padding: 0 0 5px;
-	border-bottom: 2px solid #ccc;
+    padding: 0 0 5px;
+    border-bottom: 2px solid #ccc;
 }
 
 .tableRow:nth-of-type(2n) {

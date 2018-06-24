@@ -4,9 +4,9 @@ import { saga as eventsSaga } from '../ducks/events';
 import { all } from 'redux-saga/effects';
 
 export default function* rootSaga() {
-	yield all([
-	    peopleSaga(),
-		authSaga(),
-		eventsSaga()
-	]);
+    yield all([
+        peopleSaga(),
+        authSaga(),
+        eventsSaga()
+    ]);
 }

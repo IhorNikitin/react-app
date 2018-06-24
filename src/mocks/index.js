@@ -1,5 +1,6 @@
-import conferences from './conferences';
 import firebase from 'firebase';
+
+import conferences from './conferences';
 
 export function saveEventsToFB() {
     const eventsRef = firebase.database().ref('/events');

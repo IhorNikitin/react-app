@@ -1,8 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
-import reducer from './reducer';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware } from 'react-router-redux';
+
+import reducer from './reducer';
 import rootSaga from './saga';
 import history from '../history';
 

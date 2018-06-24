@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+
 import events from '../../mocks/conferences';
 import EventsList from "./EventsList";
 import Loader from '../common/Loader';

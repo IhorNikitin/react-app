@@ -1,8 +1,9 @@
 import firebase from 'firebase';
 import { Record } from 'immutable';
-import { appName } from '../config';
-import { all, take, takeEvery, call, put, cps } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import { all, take, takeEvery, call, put, cps } from 'redux-saga/effects';
+
+import { appName } from '../config';
 
 export const moduleName = 'auth';
 export const SIGN_UP_REQUEST = `${appName}/${moduleName}/SIGN_UP_REQUEST`;
@@ -27,16 +28,16 @@ export default function reducer (state = new RecordReducer(), action) {
     switch (type) {
         case SIGN_UP_REQUEST:
             return state.set('loading', true);
-		case SIGN_IN_REQUEST:
+        case SIGN_IN_REQUEST:
             return state.set('loading', true);
-		case SIGN_OUT_REQUEST:
+        case SIGN_OUT_REQUEST:
             return state.set('loading', true);
         case SIGN_UP_SUCCESS:
             return state
                 .set('loading', false)
                 .set('user', payload.user)
                 .set('error', null);
-		case SIGN_UP_ERROR:
+        case SIGN_UP_ERROR:
             return state
                 .set('loading', false)
                 .set('error', error);
@@ -45,16 +46,16 @@ export default function reducer (state = new RecordReducer(), action) {
                 .set('loading', false)
                 .set('user', payload.user)
                 .set('error', null);
-		case SIGN_IN_ERROR:
+        case SIGN_IN_ERROR:
             return state
                 .set('loading', false)
                 .set('error', error);
-		case SIGN_OUT_SUCCESS:
+        case SIGN_OUT_SUCCESS:
             return state
                 .set('loading', false)
                 .set('user', null)
                 .set('error', null);
-		case SIGN_OUT_ERROR:
+        case SIGN_OUT_ERROR:
             return state
                 .set('loading', false)
                 .set('error', error);
@@ -65,118 +66,117 @@ export default function reducer (state = new RecordReducer(), action) {
 
 export function signUp(email, pass) {
     return ({
-		type: SIGN_UP_REQUEST,
-		payload: { email, pass },
-	});
+        type: SIGN_UP_REQUEST,
+        payload: { email, pass },
+    });
 }
 
 export function signIn(email, pass) {console.log(email, pass);
     return ({
-		type: SIGN_IN_REQUEST,
-		payload: { email, pass },
-	});
+        type: SIGN_IN_REQUEST,
+        payload: { email, pass },
+    });
 }
 
 export function signOut() {
     return ({
-		type: SIGN_OUT_REQUEST,
-	});
+        type: SIGN_OUT_REQUEST,
+    });
 }
 
 export const signUpSaga = function* () {
-	const auth = firebase.auth();
-	
-	while(true) {
-		const action = yield take(SIGN_UP_REQUEST);
-		
-		try {
-			const user = yield call(
-				[auth, auth.createUserWithEmailAndPassword],
-				action.payload.email,
-				action.payload.pass
-			);
-		
-			yield put({
-				type: SIGN_UP_SUCCESS,
-				payload: user
-			});
-			
-			yield put(push('/admin'));
-		} catch (error) {
-			yield put({
-				type: SIGN_UP_ERROR,
-				error
-			});
-		}
-	}
+    const auth = firebase.auth();
+
+    while(true) {
+        const action = yield take(SIGN_UP_REQUEST);
+
+        try {
+            const user = yield call(
+                [auth, auth.createUserWithEmailAndPassword],
+                action.payload.email,
+                action.payload.pass
+            );
+
+            yield put({
+                type: SIGN_UP_SUCCESS,
+                payload: user
+            });
+
+            yield put(push('/admin'));
+        } catch (error) {
+            yield put({
+                type: SIGN_UP_ERROR,
+                error
+            });
+        }
+    }
 };
 
 export const signInSaga = function* () {
-	const auth = firebase.auth();
-	
-	const action = yield take(SIGN_IN_REQUEST);
-	
-	try {
-		const user = yield call(
-			[auth, auth.signInWithEmailAndPassword],
-			action.payload.email,
-			action.payload.pass
-		);
+    const auth = firebase.auth();
 
-		yield put({
-			type: SIGN_IN_SUCCESS,
-			payload: user
-		});
-		
-		yield put(push('/admin'));
-	} catch (error) {
-		yield put({
-			type: SIGN_IN_ERROR,
-			error
-		});
-	}
+    const action = yield take(SIGN_IN_REQUEST);
+
+    try {
+        const user = yield call(
+            [auth, auth.signInWithEmailAndPassword],
+            action.payload.email,
+            action.payload.pass
+        );
+
+        yield put({
+            type: SIGN_IN_SUCCESS,
+            payload: user
+        });
+
+        yield put(push('/admin'));
+    } catch (error) {
+        yield put({
+            type: SIGN_IN_ERROR,
+            error
+        });
+    }
 };
 
 export const signOutSaga = function* (action) {
-	const auth = firebase.auth();
-	
-	try {
-		yield call([auth, auth.signOut]);
-	
-		yield put({
-			type: SIGN_OUT_SUCCESS,
-		});
-		
-		yield put(push('/auth/signin'));
-		
-	} catch (error) {
-		yield put({
-			type: SIGN_OUT_ERROR,
-			error
-		});
-	}
+    const auth = firebase.auth();
+
+    try {
+        yield call([auth, auth.signOut]);
+
+        yield put({
+            type: SIGN_OUT_SUCCESS,
+        });
+
+        yield put(push('/auth/signin'));
+
+    } catch (error) {
+        yield put({
+            type: SIGN_OUT_ERROR,
+            error
+        });
+    }
 };
 
 export const watchChangeStatusSaga = function* () {
-	const auth = firebase.auth();
-	
-	try {
-	    yield cps([auth, auth.onAuthStateChanged]);	
-	} catch(user) {
-		yield put({
-			type: SIGN_IN_SUCCESS,
-			payload: {user},
+    const auth = firebase.auth();
+
+    try {
+        yield cps([auth, auth.onAuthStateChanged]);	
+    } catch(user) {
+        yield put({
+            type: SIGN_IN_SUCCESS,
+            payload: {user},
         });
-		yield put(push('/admin'));
-	}
-	
+        yield put(push('/admin'));
+    }
 }; 
 
 export const saga = function* () {
     yield all([
-	    signUpSaga(),
-		signInSaga(),
-		yield takeEvery(SIGN_OUT_REQUEST, signOutSaga),
-		watchChangeStatusSaga()
-	]);
+        signUpSaga(),
+        signInSaga(),
+        yield takeEvery(SIGN_OUT_REQUEST, signOutSaga),
+        watchChangeStatusSaga()
+    ]);
 };

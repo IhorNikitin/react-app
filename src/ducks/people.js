@@ -1,14 +1,16 @@
-import { Record, List } from 'immutable';
-import { appName } from '../config';
-import { all, put, call, take, takeEvery, select, fork, spawn, cancel, cancelled, race } from 'redux-saga/effects';
-import { delay, eventChannel } from 'redux-saga';
 import { reset } from 'redux-form';
-import { fbDataToEntities } from './utils';
 import { createSelector } from 'reselect';
+import { Record, List } from 'immutable';
+import { delay, eventChannel } from 'redux-saga';
+import { all, put, call, take, takeEvery, select, fork, spawn, cancel, cancelled, race } from 'redux-saga/effects';
 import firebase from 'firebase';
+
+import { appName } from '../config';
+import { fbDataToEntities } from './utils';
 
 export const moduleName = 'people';
 const prefix = `${appName}/${moduleName}`;
+
 export const FETCH_ALL_PERSON_REQUEST = `${prefix}/FETCH_ALL_PERSON_REQUEST`;
 export const FETCH_ALL_PERSON_SUCCESS = `${prefix}/FETCH_ALL_PERSON_SUCCESS`;
 export const ADD_PERSON_REQUEST = `${prefix}/ADD_PERSON_REQUEST`;
@@ -134,7 +136,6 @@ export const backendSyncSaga = function* () {
             console.log('cancelled saga');
         }
     }
-
 };
 
 export const cancelledSaga = function* () {
@@ -174,7 +175,6 @@ export const realtimeSync = function* () {
         yield call([channel, channel.close]);
         console.log('-----', 'cancelled realtime sync');
     }
-
 };
 
 export const saga = function* () {

@@ -3,10 +3,6 @@ import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 class PersonCard extends Component {
-    static propTypes = {
-
-    };
-
     componentDidMount() {
         this.props.connectPreview(getEmptyImage());
     }

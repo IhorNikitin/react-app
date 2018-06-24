@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
-import { deleteEvent } from '../ducks/events';
 import { Motion, spring, presets } from 'react-motion';
 
-class Garbage extends Component {
+import { deleteEvent } from '../ducks/events';
 
+class Garbage extends Component {
     render() {
         const { connectDropTarget, hovered } = this.props;
 
@@ -28,7 +28,6 @@ class Garbage extends Component {
             )}
         </Motion>
     }
-
 }
 
 const spec = {

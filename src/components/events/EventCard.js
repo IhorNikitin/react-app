@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
+
 import { addEventToPerson, peopleListSelector } from '../../ducks/people';
 
 class EventCard extends Component {
-    static propTypes = {
-
-    };
-
     render() {
         const { event, style, connectDropTarget, hovered, canDrop, people } = this.props;
         const dropStyle = {
@@ -23,7 +20,7 @@ class EventCard extends Component {
                 <h3>{event.title}</h3>
                 <p>{event.when}</p>
                 <p>{event.where}</p>
-				<p className='addedPeople'>People: </p>
+                <p className='addedPeople'>People: </p>
                 {peopleElement}
             </div>
         );

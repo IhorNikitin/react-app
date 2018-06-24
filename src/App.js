@@ -19,8 +19,8 @@ class App extends Component {
                     </ConnectedRouter>
                 </DragDropContextProvider>
             </Provider>
-    );
-  }
+        );
+    }
 }
 
 export default App;

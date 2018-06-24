@@ -7,7 +7,6 @@ import EventCard from './EventCard';
 
 class SelectedEvents extends Component {
     render() {
-        const { events } = this.props;
         return (
             <TransitionMotion
                 styles={this.getStyles()}

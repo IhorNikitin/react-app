@@ -133,7 +133,6 @@ export const backendSyncSaga = function* () {
         }
     } finally {
         if ( yield cancelled() ) {
-            console.log('cancelled saga');
         }
     }
 };
@@ -154,7 +153,6 @@ const createPeopleSocket = () => eventChannel(emmit => {
     ref.on('value', callback);
 
     return () => {
-        console.log('---', 'unsubscribing');
         ref.off('value', callback)
     };
 });
@@ -164,7 +162,6 @@ export const realtimeSync = function* () {
     try {
         while (true) {
             const { data } = yield take(channel);
-            console.log('-----', data.val());
 
             yield put({
                 type: FETCH_ALL_PERSON_SUCCESS,
@@ -173,7 +170,6 @@ export const realtimeSync = function* () {
         }
     } finally {
         yield call([channel, channel.close]);
-        console.log('-----', 'cancelled realtime sync');
     }
 };
 

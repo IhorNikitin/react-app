@@ -71,7 +71,7 @@ export function signUp(email, pass) {
     });
 }
 
-export function signIn(email, pass) {console.log(email, pass);
+export function signIn(email, pass) {
     return ({
         type: SIGN_IN_REQUEST,
         payload: { email, pass },

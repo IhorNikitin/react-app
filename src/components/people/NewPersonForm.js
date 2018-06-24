@@ -7,14 +7,14 @@ class PersonAddForm extends Component {
     render() {
         const { handleSubmit } = this.props;
         return (
-            <div>
-                <h2>Add person:</h2>
+            <div className='addPerson'>
+                <h3>Add new person:</h3>
                 <form onSubmit={handleSubmit}>
                     <Field name='firstName' component={ErrorField} />
                     <Field name='lastName' component={ErrorField} />
                     <Field name='email' component={ErrorField} />
                     <div>
-                        <input type='submit' />
+                        <input type='submit' value='Submit'/>
                     </div>
                 </form>
             </div>

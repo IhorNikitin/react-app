@@ -100,6 +100,8 @@ export const signUpSaga = function* () {
 				type: SIGN_UP_SUCCESS,
 				payload: user
 			});
+			
+			yield put(push('/admin'));
 		} catch (error) {
 			yield put({
 				type: SIGN_UP_ERROR,
@@ -125,6 +127,8 @@ export const signInSaga = function* () {
 			type: SIGN_IN_SUCCESS,
 			payload: user
 		});
+		
+		yield put(push('/admin'));
 	} catch (error) {
 		yield put({
 			type: SIGN_IN_ERROR,
@@ -163,6 +167,7 @@ export const watchChangeStatusSaga = function* () {
 			type: SIGN_IN_SUCCESS,
 			payload: {user},
         });
+		yield put(push('/admin'));
 	}
 	
 }; 

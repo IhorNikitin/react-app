@@ -15,13 +15,17 @@ class PeopleList extends Component {
 
     render() {
         return (
-            <List
-                rowCount={this.props.people.length}
-                rowHeight={100}
-                height={400}
-                width={400}
-                rowRenderer={this.rowRenderer}
-            />
+		    <div className='peopleList' title='you can drag people to selected events'>
+				<h3>People List: </h3>
+				<List
+					rowCount={this.props.people.length}
+					rowHeight={60}
+					height={220}
+					width={400}
+					className='list'
+					rowRenderer={this.rowRenderer}
+				/>
+			</div>
         )
     }
 

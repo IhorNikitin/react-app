@@ -27,12 +27,15 @@ class VirtualizedEventsList extends Component {
                             rowGetter={({ index }) => events[index]}
                             rowHeight={30}
                             headerHeight={50}
-                            width={1000}
+							headerClassName='tableHeader'
+                            width={1135}
                             height={300}
+							className='table'
                             onRowClick={this.handleRowClick}
                             onRowsRendered={onRowsRendered}
                             overscanRowCount={5}
                             rowRenderer={this.rowRenderer}
+							rowClassName='tableRow'
                         >
                             <Column
                                 dataKey='title'
@@ -47,7 +50,7 @@ class VirtualizedEventsList extends Component {
                             <Column
                                 dataKey='when'
                                 label='month'
-                                width={150}
+                                width={385}
                             />
                         </Table>
                     }

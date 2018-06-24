@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from './redux';
-import Root from './components/Root';
+import Root from './components/root/Root';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import history from './history';

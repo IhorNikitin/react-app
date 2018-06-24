@@ -5,19 +5,19 @@ class SignInForm extends Component {
   render() {
 	const { handleSubmit } = this.props;
     return (
-	  <div>
-	    <h2>Sing In</h2>
+	  <div className='signIn'>
+	    <h3>Sing In</h3>
 		<form onSubmit={handleSubmit}>
-		  <div>
+		  <div className='field'>
 		    <label>email: </label>
 			<Field name='email' component='input' />
 		  </div>
-		  <div>
+		  <div className='field'>
 		    <label>pass: </label>
 			<Field name='pass' component='input' type='password' />
 		  </div>
-		  <div>
-		    <input type='submit' />
+		  <div className='field'>
+		    <input type='submit' value='Submit'/>
 		  </div>
 		</form>
 	  </div>

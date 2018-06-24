@@ -1,0 +1,73 @@
+.adminPage {
+	display: relative;
+	padding: 20px 30px 30px;
+}
+
+.adminPage h2 {
+	text-align: center;
+}
+
+.assignEvent {
+	display: flex;
+	flex-flow: row nowrap;
+	height: 300px;
+}
+
+.peopleList {
+	flex: 0 0 400px;
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+}
+
+.selectedEvents {
+	flex: 0 0 402px;
+	display: flex;
+	flex-flow: row wrap;
+	height: calc(100% - 20px);
+	margin: 0 0 0 40px;
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	overflow: auto;
+}
+
+.peopleList > h3,
+.selectedEvents > h3 {
+	width: 100%;
+	color: #009ac7;
+}
+
+.list h3 {
+	margin: 5px 0;
+	cursor: pointer;
+}
+
+.list p {
+	margin: 5px 0;
+	background: #ddd;
+}
+
+.eventCard {
+	flex: 0 0 200px;
+	width: 160px;
+	height: 200px;
+	margin: 5px;
+	padding: 0 10px;
+	overflow: auto;
+}
+
+.eventCard h3 {
+	margin: 15px 0 10px;
+}
+
+.eventCard p {
+	margin: 5px 0;
+}
+
+.addedPeople {
+	padding: 10px 0 0;
+	color: #009ac7;
+	font-weight: bold;
+	border-top: 1px solid #ccc;
+}

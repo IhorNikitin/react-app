@@ -19,9 +19,12 @@ class VirtualizedPeopleList extends Component {
                     rowCount={people.length}
                     rowGetter={({ index }) => people[index]}
                     rowHeight={30}
+					rowClassName='tableRow'
                     headerHeight={50}
-                    width={1000}
-                    height={300}
+					headerClassName='tableHeader'
+                    width={1135}
+                    height={200}
+					className='table'
                 >
                     <Column
                         dataKey='firstName'
@@ -36,7 +39,7 @@ class VirtualizedPeopleList extends Component {
                     <Column
                         dataKey='email'
                         label='Email'
-                        width={400}
+                        width={535}
                     />
                 </Table>
             </div>

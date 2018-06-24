@@ -18,10 +18,11 @@ class SelectedEvents extends Component {
                 willEnter={this.willEnter}
             >
                 {(interpolated) =>
-                    <div>
-                        {interpolated.map(config => <div style={config.style} key = {config.key}>
-                            <EventCard event = {config.data} />
-                        </div>)}
+                    <div className='selectedEvents' title='you can add events to selected after click on row in table'>
+						<h3>Selected Events: </h3>
+						{interpolated.map(config => <div style={config.style} key = {config.key}>
+							<EventCard event = {config.data} />
+						</div>)}
                     </div>
                 }
             </TransitionMotion>

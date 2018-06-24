@@ -1,0 +1,38 @@
+.header {
+	display: flex;
+	flex-flow: row nowrap; 
+	padding: 20px 0;
+	border-bottom: 1px solid #444;
+}
+
+.logo {
+	flex: 0 0 1050px;
+	text-align: center;
+	padding: 0 0 0 150px;
+	box-sizing: border-box;
+}
+
+.logo p {
+	font-size: 42px;
+	margin: 10px 0;
+}
+
+.auth {
+	flex: 0 0 150px;
+	margin: 25px 0 0;
+	text-align: right;
+}
+
+.button {
+	width: 80px;
+	padding: 3px 15px;
+	border: 1px solid #009ac7;
+	border-radius: 5px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.button a {
+	text-decoration: none;
+	color: #444;
+}

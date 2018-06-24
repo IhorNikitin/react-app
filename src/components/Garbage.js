@@ -10,14 +10,13 @@ class Garbage extends Component {
         const { connectDropTarget, hovered } = this.props;
 
         const style = {
-            position: 'fixed',
-            top: 0,
-            right: 0,
-            width: '150px',
-            height: '150px',
-            cursor: 'pointer',
-            backgroundColor: '#ccc',
-            border: `1px solid ${hovered ? 'green' : 'black'}`
+            position: 'relative',
+            top: '200px',
+            left: '120px',
+            width: '100px',
+            height: '100px',
+            background: 'url(/assets/images/garbage.png)',
+            border: `3px solid ${hovered ? 'blue' : 'white'}`
         };
 
         return <Motion
@@ -25,7 +24,7 @@ class Garbage extends Component {
             style={{opacity: spring(1, {...presets.noWobble, stiffness: presets.noWobble.stiffness / 20})}}
         >
             {interpolatedStyle => connectDropTarget(
-                <div style={{...style, ...interpolatedStyle}}>It\'s a garbage!</div>
+                <div style={{...style, ...interpolatedStyle}} title='garbage for events from table'></div>
             )}
         </Motion>
     }

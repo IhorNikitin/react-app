@@ -1,0 +1,23 @@
+.authPage {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.authPage h2 {
+	text-align: center;	
+}
+
+.signIn,
+.signUp {
+	padding: 25px 0 0 40px;
+}
+
+.signIn h3,
+.signUp h3 {
+	text-decoration: underline;
+	color: #009ac7;
+}
+
+.field {
+	margin: 5px 0;
+}

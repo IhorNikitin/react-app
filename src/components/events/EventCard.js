@@ -19,10 +19,11 @@ class EventCard extends Component {
                 {people.map(person => person.email).join(', ')}
             </p>;
         return connectDropTarget(
-            <div style={{width: 200, height: 250, ...dropStyle, ...style}}>
+            <div className='eventCard' style={{...dropStyle, ...style}}>
                 <h3>{event.title}</h3>
                 <p>{event.when}</p>
                 <p>{event.where}</p>
+				<p className='addedPeople'>People: </p>
                 {peopleElement}
             </div>
         );

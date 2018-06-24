@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import emailValidator from 'email-validator';
+
 import ErrorField from '../common/ErrorField';
 
 class SignUpForm extends Component {
   render() {
 	const { handleSubmit } = this.props;
     return (
-	  <div>
-	    <h2>Sing Up</h2>
+	  <div className='signUp'>
+	    <h3>Sing Up</h3>
 		<form onSubmit={handleSubmit}>
-		  <Field name='email' component={ErrorField} />
+          <Field name='email' component={ErrorField} />
 		  <Field name='pass' component={ErrorField} type='password' />
-		  <div>
-		    <input type='submit' />
+		  <div className='field'>
+		    <input type='submit' value='Submit'/>
 		  </div>
 		</form>
 	  </div>

@@ -95,18 +95,18 @@ export const deleteEvent = (uid) => ({
 });
 
 export const deleteEventSaga = function * () {
-    try {
-        const action = yield take(DELETE_EVENT_REQUEST);
+    while (true) {
+        try {
+            const action = yield take(DELETE_EVENT_REQUEST);
 
-        const eventRef = firebase.database().ref(`events/${action.payload}`);
-        yield call([eventRef, eventRef.remove]);
+            const eventRef = firebase.database().ref(`events/${action.payload}`);
+            yield call([eventRef, eventRef.remove]);
 
-        yield put({
-            type: DELETE_EVENT_SUCCESS,
-            payload: action.payload
-        });
-    } catch(_) {
-
+            yield put({
+                type: DELETE_EVENT_SUCCESS,
+                payload: action.payload
+            });
+        } catch(_) {}
     }
 };
 
